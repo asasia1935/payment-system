@@ -53,4 +53,11 @@ public class Merchant {
         this.createdAt = now;
         this.updatedAt = now;
     }
+
+    // Getter
+    public UUID getMerchantId() { return merchantId; }
+    public String getName() { return name; }
+    public MerchantStatus getStatus() { return status; }
+    public Instant getCreatedAt() { return createdAt; }
+    public Instant getUpdatedAt() { return updatedAt; }
 }
