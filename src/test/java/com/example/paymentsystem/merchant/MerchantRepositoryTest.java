@@ -26,8 +26,8 @@ class MerchantRepositoryTest {
     @Autowired
     private EntityManager entityManager;
 
-    @Test
     @DisplayName("가맹점을 저장하고 ID로 조회할 수 있다")
+    @Test
     void shouldSaveAndFindMerchant() {
         // Given: 가맹점 생성
         Merchant merchant = new Merchant("테스트 가맹점");
