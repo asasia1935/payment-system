@@ -22,6 +22,7 @@ public class MerchantService {
 
     @Transactional(readOnly = true)
     public Merchant getMerchant(UUID merchantId) {
-        return merchantRepository.findById(merchantId).orElseThrow();
+        return merchantRepository.findById(merchantId).
+                orElseThrow(() -> new MerchantNotFoundException(merchantId));
     }
 }

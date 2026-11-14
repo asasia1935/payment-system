@@ -74,7 +74,7 @@ class MerchantServiceTest {
         when(merchantRepository.findById(unknownId)).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(NoSuchElementException.class, () -> merchantService.getMerchant(unknownId));
+        assertThrows(MerchantNotFoundException.class, () -> merchantService.getMerchant(unknownId));
 
         verify(merchantRepository).findById(unknownId);
     }
