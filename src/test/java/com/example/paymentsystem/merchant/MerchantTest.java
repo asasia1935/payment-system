@@ -43,4 +43,52 @@ public class MerchantTest {
         assertNotNull(merchant.getCreatedAt());
         assertEquals(merchant.getCreatedAt(), merchant.getUpdatedAt());
     }
+
+    @Test
+    @DisplayName("ACTIVE 가맹점을 정지하면 SUSPENDED 상태로 변경된다")
+    void shouldSuspendActiveMerchant() {
+        // Given
+        Merchant merchant = new Merchant("테스트 가맹점");
+
+        // When
+        merchant.suspend();
+
+        // Then
+        assertEquals(MerchantStatus.SUSPENDED, merchant.getStatus());
+    }
+
+    @Test
+    @DisplayName("SUSPENDED 가맹점을 활성화하면 ACTIVE 상태로 변경된다")
+    void shouldActivateSuspendedMerchant() {
+        // Given
+        Merchant merchant = new Merchant("테스트 가맹점");
+        merchant.suspend();
+
+        // When
+        merchant.activate();
+
+        // Then
+        assertEquals(MerchantStatus.ACTIVE, merchant.getStatus());
+    }
+
+    @Test
+    @DisplayName("이미 정지된 가맹점을 다시 정지하면 예외가 발생한다")
+    void shouldRejectSuspendingSuspendedMerchant() {
+        // Given
+        Merchant merchant = new Merchant("테스트 가맹점");
+        merchant.suspend();
+
+        // When & Then
+        assertThrows(IllegalStateException.class, merchant::suspend);
+    }
+
+    @Test
+    @DisplayName("이미 활성화된 가맹점을 다시 활성화하면 예외가 발생한다")
+    void shouldRejectActivatingActiveMerchant() {
+        // Given
+        Merchant merchant = new Merchant("테스트 가맹점");
+
+        // When & Then
+        assertThrows(IllegalStateException.class, merchant::activate);
+    }
 }

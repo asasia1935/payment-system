@@ -56,4 +56,27 @@ class MerchantRepositoryTest {
         // Then
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    @DisplayName("가맹점 상태 변경이 DB에 반영된다")
+    void shouldPersistMerchantStatusChange() {
+        // Given
+        Merchant merchant = new Merchant("테스트 가맹점");
+        merchantRepository.saveAndFlush(merchant);
+        entityManager.clear();
+
+        // DB에서 다시 조회하여 영속 상태로 만듦
+        Merchant managed = merchantRepository.findById(merchant.getMerchantId()).orElseThrow();
+
+        // When
+        managed.suspend();
+
+        entityManager.flush();
+        entityManager.clear();
+
+        // Then
+        Merchant found = merchantRepository.findById(merchant.getMerchantId()).orElseThrow();
+
+        assertEquals(MerchantStatus.SUSPENDED, found.getStatus());
+    }
 }

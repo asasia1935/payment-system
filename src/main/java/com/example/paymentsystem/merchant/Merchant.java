@@ -60,4 +60,22 @@ public class Merchant {
     public MerchantStatus getStatus() { return status; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
+
+    public void suspend() {
+        if (status != MerchantStatus.ACTIVE) {
+            throw new IllegalStateException("ACTIVE 상태인 가맹점만 정지할 수 있습니다.");
+        }
+
+        this.status = MerchantStatus.SUSPENDED;
+        this.updatedAt = Instant.now();
+    }
+
+    public void activate() {
+        if (status != MerchantStatus.SUSPENDED) {
+            throw new IllegalStateException("SUSPENDED 상태인 가맹점만 활성화할 수 있습니다.");
+        }
+
+        this.status = MerchantStatus.ACTIVE;
+        this.updatedAt = Instant.now();
+    }
 }
