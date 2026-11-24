@@ -47,8 +47,7 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     SecurityFilterChain defaultDenyAll(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .formLogin(c -> c.disable())
+        http.formLogin(c -> c.disable())
                 .httpBasic(c -> c.disable())
                 .authorizeHttpRequests(a -> a.anyRequest().denyAll())
                 .exceptionHandling(e -> e
